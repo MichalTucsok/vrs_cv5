@@ -50,7 +50,7 @@ SOFTWARE.
 uint16_t value;
 uint8_t stav;
 
-
+char txt[10];
 int main(void)
 {
 
@@ -59,7 +59,7 @@ int main(void)
 	usart_init();
 int i=0;
 int pom;
-char txt[10];
+
 // pom=1;
  stav=1;
 
@@ -79,8 +79,9 @@ char txt[10];
 			sprintf(txt,"%d",value);
 
 		}
-		 PutcUART2(txt);
-		 delay(500000);
+		 USART_ITConfig(USART2, USART_IT_TXE, ENABLE);
+		 // PutcUART2(txt);
+		// delay(500000);
 
 
 

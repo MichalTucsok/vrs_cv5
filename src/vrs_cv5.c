@@ -9,7 +9,7 @@ USART_InitTypeDef USART_InitStructure;
 
 extern uint16_t value;
 extern uint8_t stav;
-
+extern char txt[10];
 
 
 void gpioInit(){
@@ -169,10 +169,27 @@ void USART2_IRQHandler()
 		{
 			stav=!stav; //po stlaceni tlacidla 'm' sa zmeni hodnota tlacidla 'stav'
 		}
+		if (USART_GetFlagStatus(USART2, USART_FLAG_TC)) {
+				USART_ClearFlag(USART2, USART_FLAG_RXNE);
+				USART_ClearFlag(USART2, USART_FLAG_TC);
+		}
 	}
-}
+	if(USART_GetFlagStatus(USART2,USART_FLAG_TXE))
+	{
+		int i=0;
+		if (txt[i] !=0 ){
+			USART_SendData(USART2, txt[i]);
+			i++;
+		}
+		else{
+		i=0;
+		USART_ClearFlag(USART2, USART_FLAG_TXE);
+		}
+		}
+	}
 
-void PutcUART2(char *ch)
+
+/* void PutcUART2(char *ch)
 {
 	uint8_t i=0;
 	while(ch[i])
@@ -185,7 +202,7 @@ void PutcUART2(char *ch)
 	while(USART_GetFlagStatus(USART2,USART_FLAG_TC)==RESET);
 	USART_SendData(USART2,'\r');
 	while(USART_GetFlagStatus(USART2,USART_FLAG_TC)==RESET);
-}
+} */
 /*
 void print_response(void)
 {
