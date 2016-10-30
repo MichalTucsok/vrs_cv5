@@ -56,12 +56,33 @@ int main(void)
 
 	gpioInit();
 	adc_init();
-
+	usart_init();
 int i=0;
+int pom;
+char txt[10];
+// pom=1;
+ stav=1;
 
 	while (1)
 	{
-		LED(value);
+	//	LED(value);
+		if(stav==0)
+		{
+
+
+
+			pom=value*3300/4096;
+						sprintf(txt,"%d mV",pom);
+		}
+		else
+		{
+			sprintf(txt,"%d",value);
+
+		}
+		 PutcUART2(txt);
+		 delay(500000);
+
+
 
 	}
 	return 0;
